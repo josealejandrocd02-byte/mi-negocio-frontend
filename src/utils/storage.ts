@@ -15,9 +15,8 @@ export interface StoredUser {
   userId: string;
   email: string;
   fullName: string;
-  platformRole: string;
+  platformRole: string; // Aquí es string, pero lo normalizamos en el hook
 }
-
 // =========================
 // TOKEN
 // =========================
