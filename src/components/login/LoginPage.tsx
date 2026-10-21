@@ -4,6 +4,7 @@ import axios from "axios";
 
 import { useAuth } from "@/hooks/AuthHooks/useAuth";
 import { isAuthenticated } from "@/utils/isTokenValid";
+import { getRole } from "@/utils/storage";
 
 // Convierte cualquier error en un mensaje entendible para el usuario
 const getErrorMessage = (err: unknown): string => {
@@ -37,11 +38,18 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const role = getRole();
 
   // Si ya tiene una sesión válida, no vuelve a ver el login
   if (isAuthenticated()) {
-    return <Navigate to="/dashboard" replace />;
-  }
+    if (role === "SUPER_ADMIN") {
+      navigate("/dashboard_super_admin", { replace: true });
+    } else if (role === "USER") {
+      navigate("/dashboard", { replace: true });
+    } else {
+      navigate("/", { replace: true });
+    }
+      }
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

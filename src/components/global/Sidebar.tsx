@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Briefcase, LayoutDashboard, Store, Users,
   LogOut, ShieldCheck, ShoppingBag, Package,
+  PizzaIcon,
 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useUserSession } from '@/hooks/useUserSession ';
@@ -16,23 +17,24 @@ const Sidebar: React.FC<SidebarProps> = ({ onLogout }) => {
 
   // --- Definición de Menús por Rol ---
   const superAdminMenu = [
-    { name: 'Resumen global', icon: LayoutDashboard, path: '/dashboard' },
+    { name: 'Resumen global', icon: LayoutDashboard, path: '/dashboard_super_admin' },
     { name: 'Locales', icon: Store, path: '/locales' },
     { name: 'Usuarios', icon: Users, path: '/usuarios' },
   ];
 
   const storeAdminMenu = [
     { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
-    { name: 'Mi Local', icon: Store, path: '/mi-local' },
+    { name: 'Mi Negocio', icon: Store, path: '/mi-local' },
     { name: 'Empleados', icon: Users, path: '/empleados' },
-    { name: 'Inventario', icon: Package, path: '/inventario' },
+    { name: 'Productos', icon: PizzaIcon, path: '/productos' },
+    { name: 'Categorias', icon: Package, path: '/categorias' },
     { name: 'Ventas', icon: ShoppingBag, path: '/ventas' },
   ];
 
   const employeeMenu = [
-    { name: 'Punto de Venta', icon: ShoppingBag, path: '/pos' },
-    { name: 'Mis Ventas', icon: LayoutDashboard, path: '/mis-ventas' },
-    { name: 'Inventario', icon: Package, path: '/inventario-lectura' },
+    { name: 'Nueva Orden', icon: ShoppingBag, path: '/pos' },
+    { name: 'Mis Ordenes', icon: LayoutDashboard, path: '/mis-ventas' },
+
   ];
 
   const menuItems = isSuperAdmin ? superAdminMenu : isStoreAdmin ? storeAdminMenu : employeeMenu;
