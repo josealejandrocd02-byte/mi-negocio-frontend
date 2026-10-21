@@ -60,7 +60,7 @@ const TestPage = () => {
         {/* Estado de la sesión */}
         <div className="flex items-center gap-3">
           <span className="inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span>
-          <h1 className="text-2xl font-serif font-bold text-gray-900">Sesión iniciada correctamente</h1>
+          <h1 className="text-2xl font-serif font-bold text-gray-900">Sesión iniciada correctamente NO Adminaa</h1>
         </div>
 
         {/* Tarjeta de usuario */}

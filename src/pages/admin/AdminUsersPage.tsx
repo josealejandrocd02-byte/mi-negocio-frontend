@@ -4,7 +4,7 @@ import { useAdminUsers } from "@/hooks/AdminHooks/useAdminUsers";
 import { useUserFilters } from "@/hooks/AdminHooks/useUserFilters";
 import type { AdminUser, StoreOption, UserStatusFilter } from "@/services/AdminServices/Types/adminUser";
 import AssignStoreModal from "@/components/AdminComponents/users/AssignStoreModal";
-import ConfirmDialog from "@/components/AdminComponents/users/ConfirmDialog";
+import ConfirmDialog from "@/components/AdminComponents/ConfirmDialog";
 import { btnPrimary, inputClass } from "@/components/AdminComponents/users/Modal";
 import PasswordResetModal from "@/components/AdminComponents/users/PasswordResetModal";
 import StatCard from "@/components/AdminComponents/users/StatCard";
