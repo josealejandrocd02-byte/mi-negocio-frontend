@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { login } from "@/services/AuthServices/authService";
 import { clearSession, saveRole, saveToken, saveUser } from "@/utils/storage";
 
@@ -23,3 +24,30 @@ export const useAuth = () => {
 
   return { handleLogin, handleLogout };
 };
+=======
+import { login } from "@/services/AuthServices/authService";
+import { clearSession, saveRole, saveToken, saveUser } from "@/utils/storage";
+
+export const useAuth = () => {
+  const handleLogin = async (email: string, password: string) => {
+    const data = await login(email, password);
+
+    saveToken(data.token);
+    saveRole(data.platformRole);
+    saveUser({
+      userId: data.userId,
+      email: data.email,
+      fullName: data.fullName,
+      platformRole: data.platformRole,
+    });
+
+    return data;
+  };
+
+  const handleLogout = () => {
+    clearSession();
+  };
+
+  return { handleLogin, handleLogout };
+};
+>>>>>>> 38a01d0a (Actualizar front de productos y categorias)
