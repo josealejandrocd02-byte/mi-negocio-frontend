@@ -27,7 +27,6 @@ const Field = ({ label, value }: { label: string; value: string }) => (
 // Página de prueba: muestra la información del usuario con sesión iniciada
 const TestPage = () => {
   const navigate = useNavigate();
-  const { handleLogout } = useAuth();
 
   const stored = getUser(); // datos guardados al iniciar sesión
   const expiresAt = getTokenExpiration();
@@ -52,31 +51,16 @@ const TestPage = () => {
     .join("")
     .toUpperCase();
 
-  const onLogout = () => {
-    handleLogout();
-    navigate("/", { replace: true });
-  };
 
   return (
     <div className="min-h-screen bg-[#f8f9fc] font-sans">
-      {/* Barra superior */}
-      <header className="bg-[#1e1b4b] text-white">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
-          <span className="text-lg font-bold tracking-wide">mi negocio</span>
-          <button
-            onClick={onLogout}
-            className="rounded-lg border border-white/20 px-4 py-1.5 text-sm hover:bg-white/10 transition-colors"
-          >
-            Cerrar sesión
-          </button>
-        </div>
-      </header>
+
 
       <main className="mx-auto max-w-4xl space-y-6 px-6 py-10">
         {/* Estado de la sesión */}
         <div className="flex items-center gap-3">
           <span className="inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span>
-          <h1 className="text-2xl font-serif font-bold text-gray-900">Sesión iniciada correctamente</h1>
+          <h1 className="text-2xl font-serif font-bold text-gray-900">Sesión iniciada correctamente NO Adminaa</h1>
         </div>
 
         {/* Tarjeta de usuario */}
