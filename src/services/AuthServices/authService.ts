@@ -13,7 +13,7 @@ export interface LoginResponse {
 export interface MeStore {
   storeId: string;
   storeName: string;
-  role: "STORE_ADMIN" | "EMPLOYEE";
+  role: "STORE_ADMIN" | "EMPLOYEE" | string;
   active: boolean;
 }
 
