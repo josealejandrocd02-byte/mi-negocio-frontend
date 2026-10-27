@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { ClipboardList } from "lucide-react";
 
-import { useAuth } from "@/hooks/AuthHooks/useAuth";
+import AppHeader from "@/components/layout/AppHeader";
 import { getMe } from "@/services/AuthServices/authService";
 import { getUser } from "@/utils/storage";
-import { getTokenExpiration } from '@/utils/isTokenValid';
-
+import { getTokenExpiration } from "@/utils/isTokenValid";
 
 const PLATFORM_ROLES: Record<string, string> = {
   SUPER_ADMIN: "Superadministrador",
@@ -24,15 +24,10 @@ const Field = ({ label, value }: { label: string; value: string }) => (
   </div>
 );
 
-// Página de prueba: muestra la información del usuario con sesión iniciada
 const TestPage = () => {
-  const navigate = useNavigate();
-  const { handleLogout } = useAuth();
-
-  const stored = getUser(); // datos guardados al iniciar sesión
+  const stored = getUser();
   const expiresAt = getTokenExpiration();
 
-  // Datos frescos desde el backend (GET /api/me). Si falla, se usan los guardados.
   const { data: me, isLoading, isError } = useQuery({
     queryKey: ["me"],
     queryFn: getMe,
@@ -52,31 +47,28 @@ const TestPage = () => {
     .join("")
     .toUpperCase();
 
-  const onLogout = () => {
-    handleLogout();
-    navigate("/", { replace: true });
-  };
-
   return (
     <div className="min-h-screen bg-[#f8f9fc] font-sans">
-      {/* Barra superior */}
-      <header className="bg-[#1e1b4b] text-white">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
-          <span className="text-lg font-bold tracking-wide">mi negocio</span>
-          <button
-            onClick={onLogout}
-            className="rounded-lg border border-white/20 px-4 py-1.5 text-sm hover:bg-white/10 transition-colors"
-          >
-            Cerrar sesión
-          </button>
-        </div>
-      </header>
+      {/* Barra superior con el menú de 3 rayitas arriba a la izquierda */}
+      <AppHeader />
 
-      <main className="mx-auto max-w-4xl space-y-6 px-6 py-10">
-        {/* Estado de la sesión */}
-        <div className="flex items-center gap-3">
-          <span className="inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span>
-          <h1 className="text-2xl font-serif font-bold text-gray-900">Sesión iniciada correctamente</h1>
+      <main className="mx-auto max-w-4xl space-y-6 px-4 py-8 sm:px-6 sm:py-10">
+        {/* Estado de la sesión + botón directo a Órdenes */}
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span>
+            <h1 className="text-2xl font-serif font-bold text-gray-900">
+              Sesión iniciada correctamente
+            </h1>
+          </div>
+
+          <Link
+            to="/orders"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#5b4bdf] px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-[#4a3bc7] transition-colors"
+          >
+            <ClipboardList className="h-4 w-4" />
+            Ir a Órdenes
+          </Link>
         </div>
 
         {/* Tarjeta de usuario */}
@@ -101,8 +93,14 @@ const TestPage = () => {
               label="Cuenta creada"
               value={me?.createdAt ? new Date(me.createdAt).toLocaleString("es-BO") : "-"}
             />
-            <Field label="Estado de la cuenta" value={me ? (me.active ? "Activa" : "Bloqueada") : "-"} />
-            <Field label="La sesión expira" value={expiresAt ? expiresAt.toLocaleString("es-BO") : "-"} />
+            <Field
+              label="Estado de la cuenta"
+              value={me ? (me.active ? "Activa" : "Bloqueada") : "-"}
+            />
+            <Field
+              label="La sesión expira"
+              value={expiresAt ? expiresAt.toLocaleString("es-BO") : "-"}
+            />
           </dl>
         </section>
 
@@ -114,7 +112,8 @@ const TestPage = () => {
 
           {isError && (
             <p className="text-sm text-amber-700">
-              No se pudo consultar <code>/api/me</code>. Se muestran los datos guardados al iniciar sesión.
+              No se pudo consultar <code>/api/me</code>. Se muestran los datos guardados al iniciar
+              sesión.
             </p>
           )}
 
@@ -133,7 +132,8 @@ const TestPage = () => {
                   <tr className="border-b border-gray-200 text-xs uppercase tracking-wide text-gray-400">
                     <th className="py-2 pr-4 font-medium">Sucursal</th>
                     <th className="py-2 pr-4 font-medium">Rol</th>
-                    <th className="py-2 font-medium">Acceso</th>
+                    <th className="py-2 pr-4 font-medium">Acceso</th>
+                    <th className="py-2 text-right font-medium">Pedidos</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -141,7 +141,7 @@ const TestPage = () => {
                     <tr key={s.storeId} className="border-b border-gray-100 last:border-0">
                       <td className="py-3 pr-4 font-medium text-gray-900">{s.storeName}</td>
                       <td className="py-3 pr-4 text-gray-600">{STORE_ROLES[s.role] ?? s.role}</td>
-                      <td className="py-3">
+                      <td className="py-3 pr-4">
                         <span
                           className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
                             s.active ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"
@@ -149,6 +149,16 @@ const TestPage = () => {
                         >
                           {s.active ? "Activo" : "Restringido"}
                         </span>
+                      </td>
+                      <td className="py-3 text-right">
+                        {s.active && (
+                          <Link
+                            to={`/orders?storeId=${s.storeId}`}
+                            className="inline-flex items-center gap-1 rounded-lg bg-[#f0f2fa] px-3 py-1 text-xs font-semibold text-[#5b4bdf] hover:bg-[#e0e4f5]"
+                          >
+                            Ver órdenes
+                          </Link>
+                        )}
                       </td>
                     </tr>
                   ))}

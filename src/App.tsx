@@ -13,11 +13,12 @@ import EliminacionCuenta from "./pages/EliminacionCuenta";
 import LoginPage from "./components/login/LoginPage";
 import PoliticaDePrivacidad from "./components/legal/PoliticaDePrivacidad";
 import TestPage from "./pages/TestPage";
+import OrdersPage from "./pages/OrdersPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-/* 🔐 RUTA PROTEGIDA: exige sesión válida y, opcionalmente, un rol de plataforma */
+/* RUTA PROTEGIDA: exige sesión válida y, opcionalmente, un rol de plataforma */
 const ProtectedRoute = ({ children, roles }: { children: ReactNode; roles?: string[] }) => {
   if (!isAuthenticated()) {
     return <Navigate to="/" replace />;
@@ -40,10 +41,10 @@ const App = () => (
 
       <BrowserRouter>
         <Routes>
-          {/* 🔐 AUTH */}
+          {/* AUTH */}
           <Route path="/" element={<LoginPage />} />
 
-          {/* 🧪 PÁGINA DE PRUEBA (usuario con sesión iniciada) */}
+          {/* INICIO / PERFIL */}
           <Route
             path="/dashboard"
             element={
@@ -53,12 +54,22 @@ const App = () => (
             }
           />
 
+          {/* MÓDULO DE ÓRDENES (orders y order_items) */}
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRoute>
+                <OrdersPage />
+              </ProtectedRoute>
+            }
+          />
+
           {/* LEGAL */}
           <Route path="/politica-privacidad" element={<PoliticaDePrivacidad />} />
           <Route path="/terminos-y-condiciones" element={<TerminosYCondiciones />} />
           <Route path="/eliminacion-de-cuenta" element={<EliminacionCuenta />} />
 
-          {/* ❌ */}
+          {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
