@@ -27,7 +27,8 @@ import EmployeesPage from "./pages/store_admin/EmployeesPage";
 import ProductsPage from "./pages/ProductAndCategory/ProductsPage";
 import CategoriesPage from "./pages/ProductAndCategory/CategoriesPage";
 import SalesPage from "./pages/sales/SalesPage";
-import OrdersPage from "./pages/order/OrderPage";
+import NewSalePage from "./pages/order/NewSalePage";
+import OrdersHistoryPage from "./pages/order/OrdersHistoryPage";
 // TestPage ya no se usa en rutas (puedes conservarla como página de depuración)
 
 const queryClient = new QueryClient();
@@ -163,11 +164,23 @@ const App = () => (
             element={
               <ProtectedRoute roles={USER}>
                 <Layout>
-                  <OrdersPage/>
+                  <NewSalePage/>
                 </Layout>
               </ProtectedRoute>
             }
           />
+
+         <Route
+             path="/mis-ventas"
+            element={
+              <ProtectedRoute roles={USER}>
+                <Layout>
+                  <OrdersHistoryPage/>
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+
 
 
 

@@ -27,10 +27,13 @@ export const listProducts = async (
   return data;
 };
 
+
 export const getProduct = async (storeId: string, productId: string): Promise<Product> => {
   const { data } = await api.get<Product>(`${base(storeId)}/${productId}`);
   return data;
 };
+
+
 
 export const createProduct = async (
   storeId: string,
