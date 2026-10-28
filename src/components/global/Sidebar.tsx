@@ -32,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onLogout }) => {
   ];
 
   const employeeMenu = [
-    { name: 'Punto de Venta', icon: ShoppingBag, path: '/pos' },
+    { name: 'Nueva Venta', icon: ShoppingBag, path: '/pos' },
     { name: 'Mis Ventas', icon: LayoutDashboard, path: '/mis-ventas' },
     { name: 'Inventario', icon: Package, path: '/inventario-lectura' },
   ];
